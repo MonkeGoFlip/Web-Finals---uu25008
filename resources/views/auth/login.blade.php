@@ -1,0 +1,22 @@
+@extends('layout')
+
+@section('content')
+<div class="card">
+    <h2>Login to Polyphony</h2>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+            @error('email') <div class="error">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+@endsection
