@@ -39,7 +39,7 @@
 
         // 4. Ping Laravel using the native browser Fetch API
         try {
-            const response = await fetch(`/search?${params.toString()}`);
+            const response = await fetch(`{{ route('posts.search') }}?${params.toString()}`);
             const html = await response.text();
             
             // 5. Update the page without refreshing

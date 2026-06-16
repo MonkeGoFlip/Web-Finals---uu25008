@@ -23,7 +23,7 @@ class PostController extends Controller
             $query->where('title', 'like', '%' . $request->search . '%');
         }
         if ($request->filled('types')) {
-            $query->whereIn('type', $request->types);
+            $query->whereIn('type', $request->input('types'));
         }
         $posts = $query->get();
         return view('partials.post_cards', compact('posts'))->render();
