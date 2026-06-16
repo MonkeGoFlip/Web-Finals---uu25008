@@ -4,11 +4,12 @@
 <div class="dashboard-container">
     
     <div class="main-content" id="post-list">
+        <h1 style="margin-top: 0; font-size: 1.5rem; color: #18181b;">Recent Posts</h1>
         @include('partials.post_cards', ['posts' => $posts])
     </div>
 
     <div class="sidebar">
-        <h3 style="margin-top: 0;">{{ __('app.filters') }}</h3>
+        <h2 style="margin-top: 0;">{{ __('app.filters') }}</h2>
         <div style="display: flex; flex-direction: column; gap: 0.5rem;" id="filters">
             <label><input type="checkbox" class="filter-checkbox" value="midi"> midi</label>
             <label><input type="checkbox" class="filter-checkbox" value="practice"> practice</label>

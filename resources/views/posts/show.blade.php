@@ -15,8 +15,8 @@
             <span class="tag" style="background: #18181b; color: white; font-size: 1rem;">{{ ucfirst($post->type) }}</span>
             
             @if(Auth::check() && (Auth::id() == $post->user_id || Auth::user()->role === 'admin'))
-                 <a href="{{ route('posts.edit', $post->id) }}">
-                    <button style="background-color: #f4f4f5; color: #18181b; border: 1px solid #d4d4d8; padding: 0.4rem 0.8rem; font-size: 0.9rem;">Edit Post</button>
+                 <a href="{{ route('posts.edit', $post->id) }}" style="display: inline-block; background-color: #f4f4f5; color: #18181b; border: 1px solid #d4d4d8; padding: 0.4rem 0.8rem; font-size: 0.9rem; text-decoration: none; border-radius: 4px;">
+                    Edit Post
                 </a>
                 <form method="POST" action="{{ route('posts.destroy', $post->id) }}" onsubmit="return confirm('Are you sure you want to delete this post?');">
                     @csrf
