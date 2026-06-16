@@ -31,7 +31,6 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    // --- REGISTRATION ---
     public function showRegister()
     {
         return view('auth.register');
@@ -56,7 +55,6 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    // --- LOGOUT ---
     public function logout(Request $request)
     {
         Auth::logout();
