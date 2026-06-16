@@ -13,26 +13,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = \App\Models\Post::with('tags')->latest()->get();
+        $posts = Post::with('tags')->latest()->get();
         return view('welcome', compact('posts'));
     }
     public function search(\Illuminate\Http\Request $request)
     {
-        $query = \App\Models\Post::with('tags')->latest();
-
-        // If the user typed in the search bar, filter the title
+        $query = Post::with('tags')->latest();
         if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%');
         }
-
-        // If the user checked any boxes, filter by the type enum
         if ($request->filled('types')) {
             $query->whereIn('type', $request->types);
         }
-
         $posts = $query->get();
-
-        // Return just the HTML fragment, not the whole page
         return view('partials.post_cards', compact('posts'))->render();
     }
 
@@ -66,7 +59,7 @@ class PostController extends Controller
             $filePath = $request->file('file')->store('post_files', 'public');
         }
 
-        $post = \App\Models\Post::create([
+        $post = Post::create([
             'user_id' => \Illuminate\Support\Facades\Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
@@ -95,7 +88,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if ($post->user_id !== \Illuminate\Support\Facades\Auth::id()) {
+        if ($post->user_id != \Illuminate\Support\Facades\Auth::id() && \Illuminate\Support\Facades\Auth::user()->role != 'admin') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -108,7 +101,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        if ($post->user_id !== \Illuminate\Support\Facades\Auth::id()) {
+        if ($post->user_id != \Illuminate\Support\Facades\Auth::id() && \Illuminate\Support\Facades\Auth::user()->role != 'admin') {
             abort(403, 'Unauthorized action.');
         }
 
@@ -144,7 +137,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if ($post->user_id !== \Illuminate\Support\Facades\Auth::id()) {
+        if ($post->user_id != \Illuminate\Support\Facades\Auth::id() && \Illuminate\Support\Facades\Auth::user()->role != 'admin') {
             abort(403, 'Unauthorized action.');
         }
         $post->delete(); 

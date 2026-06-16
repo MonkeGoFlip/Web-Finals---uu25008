@@ -14,7 +14,7 @@ class CommentController extends Controller
      */
     public function store(Request $request, Post $post)
     {
-        if (\Illuminate\Support\Facades\Auth::user()->is_blocked) {
+        if (Auth::user()->is_blocked) {
             abort(403, 'Your account has been blocked from creating content.');
         }
         $request->validate([
@@ -26,9 +26,9 @@ class CommentController extends Controller
         ]);
         return back();
     }
-    public function destroy(\App\Models\Comment $comment)
+    public function destroy(Comment $comment)
     {
-        if (\Illuminate\Support\Facades\Auth::user()->role !== 'admin') {
+        if ($comment->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
         $comment->delete();
